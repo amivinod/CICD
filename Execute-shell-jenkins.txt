@@ -1,0 +1,9 @@
+# Stop and remove any existing container running on port 8081
+sudo docker ps -q --filter "publish=8081" | xargs -r sudo docker stop
+sudo docker ps -aq --filter "publish=8081" | xargs -r sudo docker rm
+
+# Remove old image
+sudo docker images -q aws-project | xargs -r sudo docker rmi -f
+
+sudo docker build -t aws-project .
+sudo docker run -d -p 8081:80 aws-project
